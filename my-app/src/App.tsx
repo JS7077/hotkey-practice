@@ -1,11 +1,13 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import { Hotbar } from './Hotbar'
 import { KEYS, type KEY } from './Types'
 
+export type hotbarData = [KEY, string]
+
 function App() {
-  const hotbar = [KEYS.ONE,KEYS.TWO,KEYS.THREE,KEYS.FOUR,KEYS.FIVE,KEYS.SIX,KEYS.SEVEN,KEYS.EIGHT,KEYS.NINE]
-  const keybinds = useMemo(()=>hotbar,hotbar)
+  const hotbar = useRef([KEYS.ONE, KEYS.TWO, KEYS.THREE, KEYS.FOUR, KEYS.Q, KEYS.Z, KEYS.F, KEYS.E, KEYS.R])
+  const items = useRef([])
   const [keyPressed, setKeyPressed] = useState('')
 
   useEffect(() => {
@@ -29,7 +31,7 @@ function App() {
       alignItems: 'center',
       height: '100svh'
     }}>
-      <Hotbar hotbar={keybinds} keyPressed={keyPressed as KEY} />
+      <Hotbar hotbar={hotbar.current} keyPressed={keyPressed as KEY} items={items.current} />
     </div>
   )
 }
