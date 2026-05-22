@@ -3,7 +3,7 @@ import { type KEY } from "./Types"
 
 const borderWidth = 2
 
-export function Hotbar({hotbar, keyPressed, items}:{hotbar:KEY[], keyPressed: KEY, items: any[]}) {
+export function Hotbar({hotbar, keyPressed, items}:{hotbar:KEY[], keyPressed: KEY, items: string[]}) {
     const [selectI, setSelectI] = useState(0)
 
     useEffect(() => {
@@ -16,10 +16,10 @@ export function Hotbar({hotbar, keyPressed, items}:{hotbar:KEY[], keyPressed: KE
     const slots = [] as JSX.Element[]
     for(let i = 0; i < 9; i++) {
         if(i === selectI) {
-            slots.push(<Selector slot={<Slot keybind={hotbar[i]} item={items[i]} />} key={i} />)
+            slots.push(<Selector slot={<Slot item={items[i]} />} key={i} />)
             continue
         }
-        slots.push(<Slot key={i} keybind={hotbar[i]} item={items[i]} />)
+        slots.push(<Slot key={i} item={items[i]} />)
     }
     
     return (
@@ -43,7 +43,7 @@ function Selector({slot}:{slot: JSX.Element}) {
     )
 }
 
-function Slot({keybind, item}:{keybind:KEY, item: any}) {
+function Slot({item}:{item: string}) {
     return (
         <div style={{
             justifyContent: 'center',
@@ -53,7 +53,11 @@ function Slot({keybind, item}:{keybind:KEY, item: any}) {
             border: `${borderWidth}px double black`,
             boxSizing: 'border-box'
         }}>
-            {keybind}
+            <img style={{
+                width: '90%'
+            }}
+            src={item} 
+            />
         </div>
     )
 }
